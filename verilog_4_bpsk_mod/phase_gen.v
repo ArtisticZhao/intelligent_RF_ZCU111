@@ -22,7 +22,13 @@ module phase_gen_v1_0_M00_AXIS #
            // TDATA is the primary payload that is used to provide the data that is passing across the interface from the master.
            output wire [C_M_AXIS_TDATA_WIDTH-1 : 0] M_AXIS_TDATA,
            // TREADY indicates that the slave can accept a transfer in the current cycle.
-           input wire  M_AXIS_TREADY
+           input wire  M_AXIS_TREADY,
+           
+           // ctrl port
+           //  这个引脚控制着信号是否产生
+           input wire gen_en,
+           //  这个引脚控制这相位的变换
+           input wire phase_ctrl
            
        );
 
@@ -177,8 +183,21 @@ begin
         stream_data_out <= 0;
     end
     else
-        stream_data_out <= phase_counter + OFFSET*PHASE_STEP;
-
+    begin
+        if(gen_en)
+        begin
+            if(phase_ctrl) 
+            begin
+                stream_data_out <= phase_counter + OFFSET*PHASE_STEP;
+            end else
+            begin
+                stream_data_out <= phase_counter + OFFSET*PHASE_STEP + 32'd2147483648;
+            end
+        end else
+        begin
+            stream_data_out <= 16'd0;
+        end
+    end
 end
 
 
