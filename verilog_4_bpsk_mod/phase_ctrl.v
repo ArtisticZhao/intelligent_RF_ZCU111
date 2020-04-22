@@ -159,5 +159,5 @@ begin
             phase_ctrl <= phase_ctrl;
 end
 // Ê¹ÄÜĞÅºÅ
-assign gen_en = (state == S_SEND_BYTE || state == S_SEND_READ);
+assign gen_en = 1; // (state == S_SEND_BYTE || state == S_SEND_READ);
 endmodule

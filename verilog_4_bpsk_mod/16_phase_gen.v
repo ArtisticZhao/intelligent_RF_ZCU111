@@ -96,9 +96,12 @@ module phase_gen_16(
     input wire  M16_AXIS_ARESETN,
     output wire  M16_AXIS_TVALID,
     output wire [16-1 : 0] M16_AXIS_TDATA,
-    input wire  M16_AXIS_TREADY
+    input wire  M16_AXIS_TREADY,
+    
+    input wire gen_en,
+    input wire phase_ctrl
 );
-parameter [31:0] step = 32'd419430400;
+parameter [31:0] step = 32'd916455424;
 parameter [4:0]  total = 5'd16;
 
 phase_gen_v1_0_M00_AXIS #(
@@ -110,7 +113,9 @@ phase_gen_v1_0_M00_AXIS #(
     .M_AXIS_ARESETN(M01_AXIS_ARESETN),
     .M_AXIS_TVALID(M01_AXIS_TVALID),
     .M_AXIS_TDATA(M01_AXIS_TDATA),
-    .M_AXIS_TREADY(M01_AXIS_TREADY)
+    .M_AXIS_TREADY(M01_AXIS_TREADY),
+    .gen_en(gen_en),
+    .phase_ctrl(phase_ctrl)
 );
 
 phase_gen_v1_0_M00_AXIS #(
@@ -122,7 +127,9 @@ phase_gen_v1_0_M00_AXIS #(
     .M_AXIS_ARESETN(M02_AXIS_ARESETN),
     .M_AXIS_TVALID(M02_AXIS_TVALID),
     .M_AXIS_TDATA(M02_AXIS_TDATA),
-    .M_AXIS_TREADY(M02_AXIS_TREADY)
+    .M_AXIS_TREADY(M02_AXIS_TREADY),
+    .gen_en(gen_en),
+    .phase_ctrl(phase_ctrl)
 );
 
 phase_gen_v1_0_M00_AXIS #(
@@ -134,7 +141,9 @@ phase_gen_v1_0_M00_AXIS #(
     .M_AXIS_ARESETN(M03_AXIS_ARESETN),
     .M_AXIS_TVALID(M03_AXIS_TVALID),
     .M_AXIS_TDATA(M03_AXIS_TDATA),
-    .M_AXIS_TREADY(M03_AXIS_TREADY)
+    .M_AXIS_TREADY(M03_AXIS_TREADY),
+    .gen_en(gen_en),
+    .phase_ctrl(phase_ctrl)
 );
 
 phase_gen_v1_0_M00_AXIS #(
@@ -146,7 +155,9 @@ phase_gen_v1_0_M00_AXIS #(
     .M_AXIS_ARESETN(M04_AXIS_ARESETN),
     .M_AXIS_TVALID(M04_AXIS_TVALID),
     .M_AXIS_TDATA(M04_AXIS_TDATA),
-    .M_AXIS_TREADY(M04_AXIS_TREADY)
+    .M_AXIS_TREADY(M04_AXIS_TREADY),
+    .gen_en(gen_en),
+    .phase_ctrl(phase_ctrl)
 );
 
 phase_gen_v1_0_M00_AXIS #(
@@ -158,7 +169,9 @@ phase_gen_v1_0_M00_AXIS #(
     .M_AXIS_ARESETN(M05_AXIS_ARESETN),
     .M_AXIS_TVALID(M05_AXIS_TVALID),
     .M_AXIS_TDATA(M05_AXIS_TDATA),
-    .M_AXIS_TREADY(M05_AXIS_TREADY)
+    .M_AXIS_TREADY(M05_AXIS_TREADY),
+    .gen_en(gen_en),
+    .phase_ctrl(phase_ctrl)
 );
 
 phase_gen_v1_0_M00_AXIS #(
@@ -170,7 +183,9 @@ phase_gen_v1_0_M00_AXIS #(
     .M_AXIS_ARESETN(M06_AXIS_ARESETN),
     .M_AXIS_TVALID(M06_AXIS_TVALID),
     .M_AXIS_TDATA(M06_AXIS_TDATA),
-    .M_AXIS_TREADY(M06_AXIS_TREADY)
+    .M_AXIS_TREADY(M06_AXIS_TREADY),
+    .gen_en(gen_en),
+    .phase_ctrl(phase_ctrl)
 );
 
 phase_gen_v1_0_M00_AXIS #(
@@ -182,7 +197,9 @@ phase_gen_v1_0_M00_AXIS #(
     .M_AXIS_ARESETN(M07_AXIS_ARESETN),
     .M_AXIS_TVALID(M07_AXIS_TVALID),
     .M_AXIS_TDATA(M07_AXIS_TDATA),
-    .M_AXIS_TREADY(M07_AXIS_TREADY)
+    .M_AXIS_TREADY(M07_AXIS_TREADY),
+    .gen_en(gen_en),
+    .phase_ctrl(phase_ctrl)
 );
 
 phase_gen_v1_0_M00_AXIS #(
@@ -194,7 +211,9 @@ phase_gen_v1_0_M00_AXIS #(
     .M_AXIS_ARESETN(M08_AXIS_ARESETN),
     .M_AXIS_TVALID(M08_AXIS_TVALID),
     .M_AXIS_TDATA(M08_AXIS_TDATA),
-    .M_AXIS_TREADY(M08_AXIS_TREADY)
+    .M_AXIS_TREADY(M08_AXIS_TREADY),
+    .gen_en(gen_en),
+    .phase_ctrl(phase_ctrl)
 );
 
 phase_gen_v1_0_M00_AXIS #(
@@ -206,7 +225,9 @@ phase_gen_v1_0_M00_AXIS #(
     .M_AXIS_ARESETN(M09_AXIS_ARESETN),
     .M_AXIS_TVALID(M09_AXIS_TVALID),
     .M_AXIS_TDATA(M09_AXIS_TDATA),
-    .M_AXIS_TREADY(M09_AXIS_TREADY)
+    .M_AXIS_TREADY(M09_AXIS_TREADY),
+    .gen_en(gen_en),
+    .phase_ctrl(phase_ctrl)
 );
 
 phase_gen_v1_0_M00_AXIS #(
@@ -218,7 +239,9 @@ phase_gen_v1_0_M00_AXIS #(
     .M_AXIS_ARESETN(M10_AXIS_ARESETN),
     .M_AXIS_TVALID(M10_AXIS_TVALID),
     .M_AXIS_TDATA(M10_AXIS_TDATA),
-    .M_AXIS_TREADY(M10_AXIS_TREADY)
+    .M_AXIS_TREADY(M10_AXIS_TREADY),
+    .gen_en(gen_en),
+    .phase_ctrl(phase_ctrl)
 );
 
 phase_gen_v1_0_M00_AXIS #(
@@ -230,7 +253,9 @@ phase_gen_v1_0_M00_AXIS #(
     .M_AXIS_ARESETN(M11_AXIS_ARESETN),
     .M_AXIS_TVALID(M11_AXIS_TVALID),
     .M_AXIS_TDATA(M11_AXIS_TDATA),
-    .M_AXIS_TREADY(M11_AXIS_TREADY)
+    .M_AXIS_TREADY(M11_AXIS_TREADY),
+    .gen_en(gen_en),
+    .phase_ctrl(phase_ctrl)
 );
 
 phase_gen_v1_0_M00_AXIS #(
@@ -242,7 +267,9 @@ phase_gen_v1_0_M00_AXIS #(
     .M_AXIS_ARESETN(M12_AXIS_ARESETN),
     .M_AXIS_TVALID(M12_AXIS_TVALID),
     .M_AXIS_TDATA(M12_AXIS_TDATA),
-    .M_AXIS_TREADY(M12_AXIS_TREADY)
+    .M_AXIS_TREADY(M12_AXIS_TREADY),
+    .gen_en(gen_en),
+    .phase_ctrl(phase_ctrl)
 );
 
 phase_gen_v1_0_M00_AXIS #(
@@ -254,7 +281,9 @@ phase_gen_v1_0_M00_AXIS #(
     .M_AXIS_ARESETN(M13_AXIS_ARESETN),
     .M_AXIS_TVALID(M13_AXIS_TVALID),
     .M_AXIS_TDATA(M13_AXIS_TDATA),
-    .M_AXIS_TREADY(M13_AXIS_TREADY)
+    .M_AXIS_TREADY(M13_AXIS_TREADY),
+    .gen_en(gen_en),
+    .phase_ctrl(phase_ctrl)
 );
 
 phase_gen_v1_0_M00_AXIS #(
@@ -266,7 +295,9 @@ phase_gen_v1_0_M00_AXIS #(
     .M_AXIS_ARESETN(M14_AXIS_ARESETN),
     .M_AXIS_TVALID(M14_AXIS_TVALID),
     .M_AXIS_TDATA(M14_AXIS_TDATA),
-    .M_AXIS_TREADY(M14_AXIS_TREADY)
+    .M_AXIS_TREADY(M14_AXIS_TREADY),
+    .gen_en(gen_en),
+    .phase_ctrl(phase_ctrl)
 );
 
 phase_gen_v1_0_M00_AXIS #(
@@ -278,7 +309,9 @@ phase_gen_v1_0_M00_AXIS #(
     .M_AXIS_ARESETN(M15_AXIS_ARESETN),
     .M_AXIS_TVALID(M15_AXIS_TVALID),
     .M_AXIS_TDATA(M15_AXIS_TDATA),
-    .M_AXIS_TREADY(M15_AXIS_TREADY)
+    .M_AXIS_TREADY(M15_AXIS_TREADY),
+    .gen_en(gen_en),
+    .phase_ctrl(phase_ctrl)
 );
 
 phase_gen_v1_0_M00_AXIS #(
@@ -290,6 +323,8 @@ phase_gen_v1_0_M00_AXIS #(
     .M_AXIS_ARESETN(M16_AXIS_ARESETN),
     .M_AXIS_TVALID(M16_AXIS_TVALID),
     .M_AXIS_TDATA(M16_AXIS_TDATA),
-    .M_AXIS_TREADY(M16_AXIS_TREADY)
+    .M_AXIS_TREADY(M16_AXIS_TREADY),
+    .gen_en(gen_en),
+    .phase_ctrl(phase_ctrl)
 );
 endmodule
