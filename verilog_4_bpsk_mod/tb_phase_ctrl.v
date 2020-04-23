@@ -25,10 +25,10 @@ always begin
  clk=~clk;
 end
 
-always begin 
- #62500000  // 100MHz
- send_signal=~send_signal;
-end
+//always begin 
+// #62500000  // 100MHz
+// send_signal=~send_signal;
+//end
 
 Phase_Ctrl uut(
     .clk        (clk),
