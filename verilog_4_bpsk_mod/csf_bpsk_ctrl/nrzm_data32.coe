@@ -1,0 +1,2 @@
+memory_initialization_radix=16;
+memory_initialization_vector=1acffc1d ff480ec0 9a0d70bc 8e2c93ad a7b746ce 5a977dcc 32a2bf3e 0a10f188 94cdeab1 fe901d81 341ae179 1c59275b 4f6e8d9c b52efb98 65457e7c 1421e311 299bd563 fd203b02 6835c2f2 38b24eb6 9edd1b39 6a5df730 ca8afcf8 2843c622 5337aac7 fa407604 d06b85e4 71649d6d 3dba3672 d4bbee61 9515f9f0 50878c44 a66f558f f480ec09 a0d70bc8 e2c93ada 7b746ce5 a977dcc3;
