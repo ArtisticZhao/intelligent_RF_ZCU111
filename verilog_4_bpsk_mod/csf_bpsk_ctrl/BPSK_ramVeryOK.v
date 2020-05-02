@@ -72,26 +72,24 @@ else begin
 end
 endmodule
 
-module BITSTREAM_GEN #(
-    parameter integer data_width = 32
-)
+module BITSTREAM_GEN
 (
 	input wire clk,
 	input wire nrst,
-	input wire[data_width-1:0] byte_in,
+	input wire[7:0] byte_in,
 	input wire byte_latch,
 	input wire en,
 	output reg bit_out,
 	output reg is_empty
 );
-reg[data_width-1:0] byte_buffer1,byte_buffer2;
-reg[data_width-1:0] idx_cnt;
+reg[7:0] byte_buffer1,byte_buffer2;
+reg[7:0] idx_cnt;
 reg ping_pong;
 always @(posedge clk)
 if(!nrst) begin
 	idx_cnt <= 8'd0;
-	byte_buffer1 <= 32'd0;
-	byte_buffer2 <= 32'd0;
+	byte_buffer1 <= 8'd0;
+	byte_buffer2 <= 8'd0;
 	ping_pong <= 1'b0;
 	bit_out <= 1'b0;
 	is_empty <= 1'b1;
@@ -102,14 +100,14 @@ else begin
 		else byte_buffer2 <= byte_in;
 	end
 	if(en) begin
-		if(idx_cnt != 8'd0) begin
+		if(|idx_cnt) begin
 			idx_cnt <= idx_cnt - 8'd1;
 			is_empty <= 1'b0;
 		end
 		else begin
 			ping_pong <= ~ping_pong;
 			is_empty <= 1'b1;
-			idx_cnt <= 8'd31;
+			idx_cnt <= 8'd7;
 		end
 		bit_out <= (ping_pong)?byte_buffer2[idx_cnt]:byte_buffer1[idx_cnt];
 	end 
@@ -119,53 +117,44 @@ endmodule
 
 module BPSK_Ctrl
 #(
-           parameter integer data_width = 32,
-           parameter integer frame_length = 38,
-           parameter integer addr_width = 32,
+           parameter integer data_width = 8,
+           parameter integer frame_length = 150,
+           parameter integer addr_width = 8,
            parameter integer ref_clk_freq = 128000000,
            parameter integer baudrate = 9600
 )
 (
-           input                            clk        , //æ—¶é’Ÿä¿¡å·
-           input                            rst_n      , //å¤ä½ä¿¡å·
-           input                            send_signal, // send å¯åŠ¨ä¿¡å·
+           input                            clk        , //Ê±ÖÓÐÅºÅ
+           input                            rst_n      , //¸´Î»ÐÅºÅ
+           input                            send_signal, // send Æô¶¯ÐÅºÅ
 
-           // RAMç«¯å£
-           output                           ram_clk    , //RAMæ—¶é’Ÿ
-           input        [data_width-1 : 0]  ram_rd_data, //RAMä¸­è¯»å‡ºçš„æ•°æ®
-           output  wire                     ram_en     , //RAMä½¿èƒ½ä¿¡å·
-           output  reg  [addr_width-1 : 0]  ram_addr   , //RAMåœ°å€
+           // RAM¶Ë¿Ú
+           output                           ram_clk    , //RAMÊ±ÖÓ
+           input        [data_width-1 : 0]  ram_rd_data, //RAMÖÐ¶Á³öµÄÊý¾Ý
+           output  wire                     ram_en     , //RAMÊ¹ÄÜÐÅºÅ
+           output  reg  [addr_width-1 : 0]  ram_addr   , //RAMµØÖ·
            
-           output  reg  [3:0]               ram_we     , //RAMè¯»å†™æŽ§åˆ¶ä¿¡å· 1å†™ 0è¯»
-           output  reg  [data_width-1 : 0]  ram_wr_data, //RAMå†™æ•°æ®
-           output  reg                      ram_rst    , //RAMå¤ä½ä¿¡å·,é«˜ç”µå¹³æœ‰æ•ˆ
+           output  reg  [0:0]               ram_we     , //RAM¶ÁÐ´¿ØÖÆÐÅºÅ 1Ð´ 0¶Á
+           output  reg  [data_width-1 : 0]  ram_wr_data, //RAMÐ´Êý¾Ý
+           output  reg                      ram_rst    , //RAM¸´Î»ÐÅºÅ,¸ßµçÆ½ÓÐÐ§
 
            // phase ctrl
            output reg                       gen_en     ,
-           output reg                       phase_ctrl ,
-           output reg                       baud
+           output reg                       phase_ctrl 
 	
 );
 wire bit_signal;
 wire clk_baud;
 reg ram_latch_enable;
-reg [data_width-1:0] data;
+reg [7:0] data;
 BAUD_GEN baud_inst
 (
 	.clk(clk),
 	.nrst(rst_n),
 	.cntl_clk_out(clk_baud)
 );
-always @ (posedge clk) begin
-    if(!rst_n)
-        baud <= 1'd0;
-    else
-    if (clk_baud)
-        baud <= ~baud;
-end
-BITSTREAM_GEN #(
-    .data_width(data_width)
-) bitstream_inst
+
+BITSTREAM_GEN bitstream_inst
 (
 	.clk(clk),
 	.nrst(rst_n),
@@ -180,10 +169,10 @@ assign ram_clk = clk;
 reg ram_en_legacy;
 always @ (posedge clk) begin
     if (!rst_n) begin
-        data <= 32'h0;
-        ram_addr <= 31'd0;
+        data <= 8'h0;
+        ram_addr <= 8'd0;
         ram_we <= 4'd0;
-        ram_wr_data <= 32'd0;
+        ram_wr_data <= 8'd0;
         ram_rst <= 1'b0;
     end
     else begin
@@ -192,8 +181,8 @@ always @ (posedge clk) begin
 		else ram_latch_enable <= 1'b0;
 		
 		if(ram_latch_enable) begin
-			if (ram_addr == 32'd152-32'd4) ram_addr <= 32'd0;  // è¿™é‡Œè™½ç„¶æ˜¯32ä½ä¸€ä¸ªå­—, ä½†æ˜¯å¯»å€è¿˜æ˜¯8bitçš„!!
-    		else ram_addr <= ram_addr + 32'd4;
+			if (ram_addr == 8'd149) ram_addr <= 8'd0;
+    		else ram_addr <= ram_addr + 8'd1;
 		end
 		data <= ram_rd_data;
     end
