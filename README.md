@@ -88,3 +88,15 @@ overlay = Overlay('/home/xilinx/system.bit')
 #### 基带数据的解码
 
 为了解决GNU Radio的粘包问题，采用了[KISS编码](https://en.wikipedia.org/wiki/KISS_(TNC))。解码方法在`kiss.py`中。
+
+### scripts
+
+保存了一些辅助的脚本。
+
+#### NRZM
+
+把数据使用NRZM进行差分编码。
+
+#### SineWave_generator
+
+利用matlab生成正弦信号，python脚本将matlab的正弦信号转为vivado可以读取的文本文件，可供仿真及Block RAM初始化使用。
